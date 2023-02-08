@@ -9,6 +9,7 @@ function handleClick() {
     fetch("https://www.deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1")
         .then(res => res.json())
         .then(data => {
+            remainingCards.innerText = `Remaining cards: ${data.remaining}`
             deckId = data.deck_id
         })
 }
@@ -28,6 +29,9 @@ drawCardBtn.addEventListener("click", () => {
             `
             const winnerText = getWinner(data.cards[0].value, data.cards[1].value)
             headline.innerText = winnerText
+            if (data.remaining === 0) {
+                drawCardBtn.disabled = "true"
+            }
             
         })
 })
